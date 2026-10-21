@@ -1,0 +1,6 @@
+@Food_Tracker_Backend_HostAddress = http://localhost:5120
+
+GET {{Food_Tracker_Backend_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
