@@ -1,4 +1,4 @@
-﻿using Food_Tracker_Backend.Data;
+﻿using Food_Tracker_Backend.Interfaces;
 using Food_Tracker_Backend.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,62 +8,53 @@ namespace Food_Tracker_Backend.Controllers
     [Route("api/[controller]")]
     public class RestaurantsController : ControllerBase
     {
-        private readonly AppDbContext _database;
+        private readonly IRestaurantRepository _Restaurantrepo;
 
-        public RestaurantsController(AppDbContext dbContext)
+        public RestaurantsController(IRestaurantRepository rRepo)
         {
-            _database = dbContext;
+            _Restaurantrepo = rRepo;
         }
 
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            return Ok(_database.Resturaunts.ToList());
+            return Ok(await _Restaurantrepo.GetAllAsync());
         }
 
-        [HttpGet("{id:int}")]
-        public IActionResult Get(int id)
+        [HttpGet("{id:int}", Name = nameof(Get))]
+        public async Task<IActionResult> Get(int id)
         {
-            var restaurant = _database.Resturaunts.FirstOrDefault(r => r.Id == id);
-
+            var restaurant = await _Restaurantrepo.GetByIdAsync(id);
             if (restaurant == null)
                 return NotFound($"Restaurant with ID {id} was not found.");
 
             return Ok(restaurant);
         }
 
-        [HttpPut("{id:int}")]
-        public IActionResult Update(int id, Restaurant data)
+        [HttpPost]
+        public async Task<IActionResult> Create(Restaurant data)
         {
-            var restaurant = _database.Resturaunts.Find(id);
+            var restaurant = await _Restaurantrepo.CreateAsync(data);
+
+            return CreatedAtRoute(nameof(Get), new { id = restaurant.Id }, restaurant);
+        }
+
+        [HttpPut("{id:int}")]
+        public async Task<IActionResult> Update(int id, Restaurant data)
+        {
+            var restaurant = await _Restaurantrepo.UpdateAsync(id, data);
             if (restaurant == null)
                 return NotFound($"Restaurant with ID {id} was not found.");
 
-            restaurant.Name = data.Name;
-            _database.SaveChanges();
-
-            return NoContent();
-        }
-
-        [HttpPost]
-        public IActionResult Create(Restaurant data)
-        {
-            var newRestaurant = new Restaurant { Name = data.Name };
-            _database.Add(newRestaurant);
-            _database.SaveChanges();
-
-            return CreatedAtAction(nameof(Get), new { id = newRestaurant.Id });
+            return Ok(restaurant);
         }
 
         [HttpDelete("{id:int}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var restaurant = _database.Resturaunts.Find(id);
+            var restaurant = await _Restaurantrepo.DeleteAsync(id);
             if (restaurant == null)
                 return NotFound($"Restaurant with ID {id} was not found.");
-
-            _database.Resturaunts.Remove(restaurant);
-            _database.SaveChanges();
 
             return NoContent();
         }

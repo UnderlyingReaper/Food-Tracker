@@ -9,8 +9,8 @@ namespace Food_Tracker_Backend.Data
         { }
 
 
-        public DbSet<Restaurant> Resturaunts => Set<Restaurant>();
-        public DbSet<MenuItem> MenuItem => Set<MenuItem>();
+        public DbSet<Restaurant> Restaurants => Set<Restaurant>();
+        public DbSet<MenuItem> MenuItems => Set<MenuItem>();
 
         protected override void OnModelCreating(ModelBuilder b)
         {

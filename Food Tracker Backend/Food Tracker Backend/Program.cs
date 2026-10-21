@@ -1,5 +1,7 @@
 
 using Food_Tracker_Backend.Data;
+using Food_Tracker_Backend.Interfaces;
+using Food_Tracker_Backend.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace Food_Tracker_Backend
@@ -12,12 +14,16 @@ namespace Food_Tracker_Backend
 
             // Add services to the container.
 
-            builder.Services.AddControllers();
+            builder.Services.AddControllers()
+                .AddJsonOptions(options => { options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles; });
+
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
 
             // Register our Database class as our Database
             builder.Services.AddDbContext<AppDbContext>(o => o.UseSqlite(builder.Configuration.GetConnectionString("Default")));
+
+            builder.Services.AddScoped<IRestaurantRepository, RestaurantRepository>();
 
             var app = builder.Build();
 

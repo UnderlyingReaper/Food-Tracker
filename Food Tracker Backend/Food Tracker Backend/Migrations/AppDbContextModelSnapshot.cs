@@ -36,7 +36,7 @@ namespace Food_Tracker_Backend.Migrations
 
                     b.HasIndex("RestaurantId");
 
-                    b.ToTable("MenuItem");
+                    b.ToTable("MenuItems");
                 });
 
             modelBuilder.Entity("Food_Tracker_Backend.Models.Restaurant", b =>
@@ -51,7 +51,7 @@ namespace Food_Tracker_Backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Resturaunts");
+                    b.ToTable("Restaurants");
                 });
 
             modelBuilder.Entity("Food_Tracker_Backend.Models.MenuItem", b =>
