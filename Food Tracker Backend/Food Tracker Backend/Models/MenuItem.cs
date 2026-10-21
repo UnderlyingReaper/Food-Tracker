@@ -6,7 +6,7 @@
         public string Name { get; set; } = string.Empty;
         public float Price { get; set; }
 
-        public int ResturauntId { get; set; }
-        public Resturaunt? Resturaunt { get; set; }
+        public int RestaurantId { get; set; }
+        public Restaurant? Restaurant { get; set; }
     }
 }

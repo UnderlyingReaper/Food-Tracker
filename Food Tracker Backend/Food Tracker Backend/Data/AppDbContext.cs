@@ -9,9 +9,12 @@ namespace Food_Tracker_Backend.Data
         { }
 
 
-        public DbSet<Resturaunt> Resturaunts => Set<Resturaunt>();
+        public DbSet<Restaurant> Resturaunts => Set<Restaurant>();
         public DbSet<MenuItem> MenuItem => Set<MenuItem>();
 
-
+        protected override void OnModelCreating(ModelBuilder b)
+        {
+            b.Entity<MenuItem>().Property(m => m.Price).HasConversion<double>();
+        }
     }
 }
