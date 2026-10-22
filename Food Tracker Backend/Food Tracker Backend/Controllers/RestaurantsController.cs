@@ -1,5 +1,6 @@
-﻿using Food_Tracker_Backend.Interfaces;
-using Food_Tracker_Backend.Models;
+﻿using Food_Tracker_Backend.DTOs.Restaurant;
+using Food_Tracker_Backend.Interfaces;
+using Food_Tracker_Backend.Mappers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Food_Tracker_Backend.Controllers
@@ -32,16 +33,18 @@ namespace Food_Tracker_Backend.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Restaurant data)
+        public async Task<IActionResult> Create(CreateRestaurantDTO dto)
         {
+            var data = dto.CreateDTOToModel();
             var restaurant = await _Restaurantrepo.CreateAsync(data);
 
             return CreatedAtRoute(nameof(Get), new { id = restaurant.Id }, restaurant);
         }
 
         [HttpPut("{id:int}")]
-        public async Task<IActionResult> Update(int id, Restaurant data)
+        public async Task<IActionResult> Update(int id, EditRestaurantDTO dto)
         {
+            var data = dto.EditDTOToModel();
             var restaurant = await _Restaurantrepo.UpdateAsync(id, data);
             if (restaurant == null)
                 return NotFound($"Restaurant with ID {id} was not found.");
