@@ -24,6 +24,7 @@ namespace Food_Tracker_Backend
             builder.Services.AddDbContext<AppDbContext>(o => o.UseSqlite(builder.Configuration.GetConnectionString("Default")));
 
             builder.Services.AddScoped<IRestaurantRepository, RestaurantRepository>();
+            builder.Services.AddScoped<IMenuItemRepository, MenuItemRepository>();
 
             var app = builder.Build();
 

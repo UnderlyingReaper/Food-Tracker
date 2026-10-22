@@ -9,23 +9,23 @@ namespace Food_Tracker_Backend.Controllers
     [Route("api/[controller]")]
     public class RestaurantsController : ControllerBase
     {
-        private readonly IRestaurantRepository _Restaurantrepo;
+        private readonly IRestaurantRepository _restaurantRepo;
 
         public RestaurantsController(IRestaurantRepository rRepo)
         {
-            _Restaurantrepo = rRepo;
+            _restaurantRepo = rRepo;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(await _Restaurantrepo.GetAllAsync());
+            return Ok(await _restaurantRepo.GetAllAsync());
         }
 
-        [HttpGet("{id:int}", Name = nameof(Get))]
+        [HttpGet("{id:int}")]
         public async Task<IActionResult> Get(int id)
         {
-            var restaurant = await _Restaurantrepo.GetByIdAsync(id);
+            var restaurant = await _restaurantRepo.GetByIdAsync(id);
             if (restaurant == null)
                 return NotFound($"Restaurant with ID {id} was not found.");
 
@@ -36,16 +36,16 @@ namespace Food_Tracker_Backend.Controllers
         public async Task<IActionResult> Create(CreateRestaurantDTO dto)
         {
             var data = dto.CreateDTOToModel();
-            var restaurant = await _Restaurantrepo.CreateAsync(data);
+            var restaurant = await _restaurantRepo.CreateAsync(data);
 
-            return CreatedAtRoute(nameof(Get), new { id = restaurant.Id }, restaurant);
+            return CreatedAtAction(nameof(Get), new { id = restaurant.Id }, restaurant);
         }
 
         [HttpPut("{id:int}")]
         public async Task<IActionResult> Update(int id, EditRestaurantDTO dto)
         {
             var data = dto.EditDTOToModel();
-            var restaurant = await _Restaurantrepo.UpdateAsync(id, data);
+            var restaurant = await _restaurantRepo.UpdateAsync(id, data);
             if (restaurant == null)
                 return NotFound($"Restaurant with ID {id} was not found.");
 
@@ -55,7 +55,7 @@ namespace Food_Tracker_Backend.Controllers
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var restaurant = await _Restaurantrepo.DeleteAsync(id);
+            var restaurant = await _restaurantRepo.DeleteAsync(id);
             if (restaurant == null)
                 return NotFound($"Restaurant with ID {id} was not found.");
 
