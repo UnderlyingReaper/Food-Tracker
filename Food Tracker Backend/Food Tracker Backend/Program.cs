@@ -25,6 +25,7 @@ namespace Food_Tracker_Backend
 
             builder.Services.AddScoped<IRestaurantRepository, RestaurantRepository>();
             builder.Services.AddScoped<IMenuItemRepository, MenuItemRepository>();
+            builder.Services.AddScoped<IBudgetConfigRepository, BudgetConfigRepository>();
 
             var app = builder.Build();
 
