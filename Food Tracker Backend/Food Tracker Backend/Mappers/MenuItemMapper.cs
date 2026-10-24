@@ -1,4 +1,4 @@
-﻿using Food_Tracker_Backend.DTOs.Menu_Item;
+﻿using Food_Tracker_Backend.DTOs;
 using Food_Tracker_Backend.Models;
 
 namespace Food_Tracker_Backend.Mappers
@@ -22,8 +22,7 @@ namespace Food_Tracker_Backend.Mappers
             {
                 Id = 0,
                 Name = dto.Name,
-                Price = dto.Price,
-                RestaurantId = dto.RestaurantId
+                Price = dto.Price
             };
         }
     }

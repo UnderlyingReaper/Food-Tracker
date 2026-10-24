@@ -1,4 +1,4 @@
-﻿using Food_Tracker_Backend.DTOs.Restaurant;
+﻿using Food_Tracker_Backend.DTOs;
 using Food_Tracker_Backend.Interfaces;
 using Food_Tracker_Backend.Mappers;
 using Microsoft.AspNetCore.Mvc;

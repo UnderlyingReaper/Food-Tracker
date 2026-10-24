@@ -1,4 +1,4 @@
-﻿using Food_Tracker_Backend.DTOs.Menu_Item;
+﻿using Food_Tracker_Backend.DTOs;
 using Food_Tracker_Backend.Interfaces;
 using Food_Tracker_Backend.Mappers;
 using Microsoft.AspNetCore.Mvc;
@@ -10,10 +10,12 @@ namespace Food_Tracker_Backend.Controllers
     public class MenuItemController : ControllerBase
     {
         private readonly IMenuItemRepository _menuItemRepo;
+        private readonly IRestaurantRepository _restaurantRepo;
 
-        public MenuItemController(IMenuItemRepository mRepo)
+        public MenuItemController(IMenuItemRepository mRepo, IRestaurantRepository restaurantRepo)
         {
             _menuItemRepo = mRepo;
+            _restaurantRepo = restaurantRepo;
         }
 
         [HttpGet]
@@ -35,6 +37,9 @@ namespace Food_Tracker_Backend.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateMenuItemDTO dto)
         {
+            if (await _restaurantRepo.RestaurnatExistsAsync(dto.RestaurantId) == false)
+                return BadRequest($"Restaurant with ID: {dto.RestaurantId} does not exist.");
+
             var data = dto.CreateDTOToModel();
             var menuItem = await _menuItemRepo.CreateAsync(data);
 
