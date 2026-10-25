@@ -40,7 +40,7 @@ namespace Food_Tracker_Backend.Controllers
             if (await _restaurantRepo.RestaurnatExistsAsync(dto.RestaurantId) == false)
                 return BadRequest($"Restaurant with ID: {dto.RestaurantId} does not exist.");
 
-            var data = dto.CreateDTOToModel();
+            var data = dto.MapToModel();
             var menuItem = await _menuItemRepo.CreateAsync(data);
 
             return CreatedAtAction(nameof(Get), new { id = menuItem.Id }, menuItem);
@@ -49,7 +49,7 @@ namespace Food_Tracker_Backend.Controllers
         [HttpPut("{id:int}")]
         public async Task<IActionResult> Update(int id, EditMenuItemDTO dto)
         {
-            var data = dto.EditDTOToModel();
+            var data = dto.MapToModel();
             var restaurant = await _menuItemRepo.UpdateAsync(id, data);
             if (restaurant == null)
                 return NotFound($"Menu Item with ID {id} was not found.");

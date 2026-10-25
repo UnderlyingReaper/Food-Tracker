@@ -35,7 +35,7 @@ namespace Food_Tracker_Backend.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateRestaurantDTO dto)
         {
-            var data = dto.CreateDTOToModel();
+            var data = dto.MapToModel();
             var restaurant = await _restaurantRepo.CreateAsync(data);
 
             return CreatedAtAction(nameof(Get), new { id = restaurant.Id }, restaurant);
@@ -44,7 +44,7 @@ namespace Food_Tracker_Backend.Controllers
         [HttpPut("{id:int}")]
         public async Task<IActionResult> Update(int id, EditRestaurantDTO dto)
         {
-            var data = dto.EditDTOToModel();
+            var data = dto.MapToModel();
             var restaurant = await _restaurantRepo.UpdateAsync(id, data);
             if (restaurant == null)
                 return NotFound($"Restaurant with ID {id} was not found.");

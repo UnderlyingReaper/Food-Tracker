@@ -5,7 +5,7 @@ namespace Food_Tracker_Backend.Mappers
 {
     public static class RestaurantMapper
     {
-        public static Restaurant CreateDTOToModel(this CreateRestaurantDTO res)
+        public static Restaurant MapToModel(this CreateRestaurantDTO res)
         {
             return new Restaurant
             {
@@ -15,7 +15,7 @@ namespace Food_Tracker_Backend.Mappers
             };
         }
 
-        public static Restaurant EditDTOToModel(this EditRestaurantDTO res)
+        public static Restaurant MapToModel(this EditRestaurantDTO res)
         {
             return new Restaurant
             {

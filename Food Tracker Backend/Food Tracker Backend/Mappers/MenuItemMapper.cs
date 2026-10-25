@@ -5,7 +5,7 @@ namespace Food_Tracker_Backend.Mappers
 {
     public static class MenuItemMapper
     {
-        public static MenuItem CreateDTOToModel(this CreateMenuItemDTO dto)
+        public static MenuItem MapToModel(this CreateMenuItemDTO dto)
         {
             return new MenuItem
             {
@@ -16,7 +16,7 @@ namespace Food_Tracker_Backend.Mappers
             };
         }
 
-        public static MenuItem EditDTOToModel(this EditMenuItemDTO dto)
+        public static MenuItem MapToModel(this EditMenuItemDTO dto)
         {
             return new MenuItem
             {

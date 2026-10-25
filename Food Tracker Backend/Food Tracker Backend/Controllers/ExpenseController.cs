@@ -19,14 +19,14 @@ namespace Food_Tracker_Backend.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var expenses = await _expenseRepository.GetAll();
+            var expenses = await _expenseRepository.GetAllAsync();
             return Ok(expenses);
         }
 
         [HttpGet("{id:int}")]
         public async Task<IActionResult> Get(int id)
         {
-            var expense = await _expenseRepository.Get(id);
+            var expense = await _expenseRepository.GetAsync(id);
             if (expense == null)
                 return NotFound($"Expense with ID: {id} not found.");
 
@@ -37,7 +37,7 @@ namespace Food_Tracker_Backend.Controllers
         public async Task<IActionResult> CreateExpense(CreateExpenseDto dto)
         {
             var expense = dto.MapToExpense();
-            var createdExpense = await _expenseRepository.CreateExpense(expense);
+            var createdExpense = await _expenseRepository.CreateExpenseAsync(expense);
 
             return CreatedAtAction(nameof(Get), new { id = createdExpense.Id }, createdExpense);
         }
@@ -47,7 +47,7 @@ namespace Food_Tracker_Backend.Controllers
         {
             var expense = dto.MapToExpense();
 
-            var updatedExpense = await _expenseRepository.EditExpense(id, expense);
+            var updatedExpense = await _expenseRepository.EditExpenseAsync(id, expense);
             if (updatedExpense == null)
                 return NotFound($"Expense with ID: {id} not found.");
 
@@ -57,7 +57,7 @@ namespace Food_Tracker_Backend.Controllers
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> DeleteExpense(int id)
         {
-            var deletedExpense = await _expenseRepository.DeleteExpense(id);
+            var deletedExpense = await _expenseRepository.DeleteExpenseAsync(id);
             if (deletedExpense == null)
                 return NotFound($"Expense with ID: {id} not found.");
 

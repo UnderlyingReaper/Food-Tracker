@@ -22,4 +22,19 @@ namespace Food_Tracker_Backend.DTOs
         [Required(ErrorMessage = "Updated date is required.")]
         public DateTime Updated { get; set; }
     }
+
+    public class BudgetDashboardDTO
+    {
+        public float MonthlyBudget { get; set; }
+        public float SpentThisMonth { get; set; }
+        public float RemainingThisMonth { get; set; }
+
+        public float FixedDailyBudget { get; set; }
+        public float DynamicDailyBudget { get; set; }
+
+        public float SpentToday { get; set; }
+
+        public float FixedRemainingToday { get; set; }
+        public float DynamicRemainingToday { get; set; }
+    }
 }

@@ -2,6 +2,7 @@
 using Food_Tracker_Backend.Data;
 using Food_Tracker_Backend.Interfaces;
 using Food_Tracker_Backend.Repositories;
+using Food_Tracker_Backend.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace Food_Tracker_Backend
@@ -25,8 +26,10 @@ namespace Food_Tracker_Backend
 
             builder.Services.AddScoped<IRestaurantRepository, RestaurantRepository>();
             builder.Services.AddScoped<IMenuItemRepository, MenuItemRepository>();
-            builder.Services.AddScoped<IBudgetConfigRepository, BudgetConfigRepository>();
+            builder.Services.AddScoped<IBudgetRepository, BudgetRepository>();
             builder.Services.AddScoped<IExpenseRepository, ExpenseRepository>();
+
+            builder.Services.AddScoped<IBudgetService, BudgetService>();
 
             var app = builder.Build();
 

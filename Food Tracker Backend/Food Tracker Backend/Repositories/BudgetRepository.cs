@@ -5,26 +5,26 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Food_Tracker_Backend.Repositories
 {
-    public class BudgetConfigRepository: IBudgetConfigRepository
+    public class BudgetRepository: IBudgetRepository
     {
         private readonly AppDbContext _database;
 
-        public BudgetConfigRepository(AppDbContext database)
+        public BudgetRepository(AppDbContext database)
         {
             _database = database;
         }
 
-        public async Task<BudgetConfig?> GetBudget()
+        public async Task<BudgetConfig?> GetBudgetAsync()
         {
             return await _database.Budgets.FirstOrDefaultAsync();
         }
 
-        public async Task<bool> BudgetExists(int id)
+        public async Task<bool> BudgetExistsAsync(int id)
         {
             return await _database.Budgets.AnyAsync(budget => budget.Id == id);
         }
 
-        public async Task<BudgetConfig> CreateBudget(BudgetConfig data)
+        public async Task<BudgetConfig> CreateBudgetAsync(BudgetConfig data)
         {
             await _database.AddAsync(data);
             await _database.SaveChangesAsync();
@@ -32,7 +32,7 @@ namespace Food_Tracker_Backend.Repositories
             return data;
         }
 
-        public async Task<BudgetConfig?> UpdateBudget(int id, BudgetConfig data)
+        public async Task<BudgetConfig?> UpdateBudgetAsync(int id, BudgetConfig data)
         {
             var budget = await _database.Budgets.FirstOrDefaultAsync(budget => budget.Id == id);
             if (budget == null) return null;
@@ -46,7 +46,7 @@ namespace Food_Tracker_Backend.Repositories
             return budget;
         }
 
-        public async Task<BudgetConfig?> DeleteBudget(int id)
+        public async Task<BudgetConfig?> DeleteBudgetAsync(int id)
         {
             var budget = await _database.Budgets.FirstOrDefaultAsync(b => b.Id == id);
             if (budget == null) return null;
