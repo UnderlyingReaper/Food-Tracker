@@ -30,7 +30,6 @@ namespace Food_Tracker_Backend.Controllers
         }
 
 
-        // CRUD Operations for BudgetConfig
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -44,8 +43,11 @@ namespace Food_Tracker_Backend.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateBudgetDTO dto)
         {
-            var newBudget = dto.MapToModel();
+            var existingBudget = await _budgetRepository.GetBudgetAsync();
+            if (existingBudget != null)
+                return Conflict("Budget already exists.");
 
+            var newBudget = dto.MapToModel();
             var savedBudget = await _budgetRepository.CreateBudgetAsync(newBudget);
 
             return CreatedAtAction(nameof(Get), null, savedBudget);
